@@ -1,3 +1,5 @@
+from typing import List
+
 from Punkt import Punkt
 from Rosliny.BarszczSosnowskiego import BarszczSosnowskiego
 from Rosliny.Guarana import Guarana
@@ -11,11 +13,12 @@ from Zwierzeta.Lis import Lis
 from Zwierzeta.Owca import Owca
 from Zwierzeta.Wilk import Wilk
 from Zwierzeta.Zolw import Zolw
+from organizmy import Organizm, Zwierze, Roslina
 
 
 class Swiat:
-    dziennik = []
-    organizmy = []
+    dziennik: List[str] = []
+    organizmy: List[Organizm] = []
     wybrany = 0
     plansza = None
     czyZyjeCzlowiek = False
