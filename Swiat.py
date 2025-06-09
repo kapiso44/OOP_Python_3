@@ -206,3 +206,54 @@ class Swiat:
             zapis += wiad
             zapis += "<br/>"
         return zapis
+
+    def utworz_organizm_z_danych(self, dane):
+        """Helper used during loading to recreate an organism."""
+        if isinstance(dane, str):
+            dane = dane.strip().split(" ")
+        if len(dane) < 6:
+            return
+        znak, x, y, sila, inicjatywa, wiek = dane[:6]
+        self.dodajOrganizmMod(
+            znak,
+            Punkt(int(x), int(y)),
+            int(sila),
+            int(inicjatywa),
+            int(wiek),
+        )
+
+    def zapisz_stan(self, nazwapliku):
+        """Zapisz stan świata do pliku."""
+        with open(nazwapliku, "w") as f:
+            f.write(
+                f"{self.rozmiarX} {self.rozmiarY} {self.numerTury} {len(self.organizmy)} {self.cooldown}\n"
+            )
+            self.sortujOrganizmy()
+            for o in self.organizmy:
+                f.write(f"{o.generujKomende()} \n")
+
+            f.write("#ZAPIS GRY WIRTUALNY SWIAT v3.0#\n")
+            f.write("#Damian Jankowski s188597#\n")
+            f.write("#znak polX polY sila inicjatywa wiek#\n")
+            f.write("#[A]ntylopa [C]zlowiek [S]uperman [L]is [O]wca [W]ilk [Z]olw#\n")
+            f.write(
+                "#[B]arszcz [G]uarana [M]lecz [T]rawa [X]Wilczejagody [R]CyberOwca#\n"
+            )
+            f.write("#Superman - czlowiek z wlaczona umiejetnoscia#\n")
+
+    @classmethod
+    def wczytaj_stan(cls, nazwapliku):
+        """Wczytaj stan świata z pliku i zwróć nową instancję."""
+        with open(nazwapliku, "r") as f:
+            tab = f.readline().rstrip().split(" ")
+
+            swiat = cls(int(tab[0]), int(tab[1]))
+            swiat.setNumerTury(int(tab[2]))
+            swiat.setCooldown(int(tab[4]))
+
+            for _ in range(int(tab[3])):
+                org = f.readline().rstrip().split(" ")
+                swiat.utworz_organizm_z_danych(org)
+
+        swiat.wyczyscDziennik()
+        return swiat
