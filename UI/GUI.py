@@ -43,7 +43,7 @@ class GUI(QMainWindow):
 
     swiat = None
 
-    def __init__(self):
+    def __init__(self, swiat=None):
         app = QApplication(sys.argv)
         super(GUI, self).__init__()
         self.setWindowTitle("Wirtualny Świat v3.0 Damian Jankowski s188597")
@@ -64,7 +64,10 @@ class GUI(QMainWindow):
                             "<br/>Q - specjalna umiejętność</h3>"
                             "</body></html>")
 
-        self.genMenuBar(False)
+        self.swiat = swiat
+        self.genMenuBar(self.swiat is not None)
+        if self.swiat is not None:
+            self.odswiezEkran()
         self.show()
         sys.exit(app.exec_())
 
