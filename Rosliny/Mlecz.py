@@ -12,3 +12,6 @@ class Mlecz(Roslina):
     def akcja(self):
         for x in range(3):
             super(Mlecz, self).akcja()
+
+    def kolizja(self, atakujacy):
+        super(Mlecz, self).kolizja(atakujacy)

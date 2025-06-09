@@ -8,3 +8,6 @@ class Trawa(Roslina):
 
     def stworzdziecko(self, p):
         return Trawa(p, self.swiat)
+
+    def kolizja(self, atakujacy):
+        super(Trawa, self).kolizja(atakujacy)

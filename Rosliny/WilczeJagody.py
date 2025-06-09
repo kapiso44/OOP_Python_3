@@ -9,7 +9,9 @@ class WilczeJagody(Roslina):
     def stworzdziecko(self, p):
         return WilczeJagody(p, self.swiat)
 
-    def czyZjadlSpecjalna(self, jedzacy):
+    def kolizja(self, atakujacy):
+        self.swiat.dodajWpis(f"{self} otruł {atakujacy}")
+        atakujacy.setZyje(False)
+        self.swiat.setPolePlanszy(atakujacy.getLokacja(), None)
         self.zyje = False
         self.swiat.setPolePlanszy(self.lokacja, None)
-        return True

@@ -19,3 +19,10 @@ class Roslina(Organizm, ABC):
                 self.swiat.dodajWpis(f"{self} zasiał się")
         else:
             self.swiat.dodajWpis(f"{self} nie zasiał się")
+
+    def kolizja(self, atakujacy):
+        if self.czyZjadlSpecjalna(atakujacy):
+            self.swiat.dodajWpis(f"{atakujacy} doznał efektu od {self}")
+        self.swiat.dodajWpis(f"{atakujacy} zjadł {self}")
+        self.zyje = False
+        self.swiat.setPolePlanszy(self.lokacja, None)

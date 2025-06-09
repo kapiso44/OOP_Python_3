@@ -89,6 +89,15 @@ class Organizm(ABC):
             self.swiat.setPolePlanszy(self.lokacja, self)
 
     def atakowanie(self, atakowany):
+        from Rosliny.Roslina import Roslina
+        if isinstance(atakowany, Roslina):
+            atakowany.kolizja(self)
+            if self.getZyje() and atakowany.getZyje() is False:
+                self.swiat.setPolePlanszy(self.lokacja, None)
+                self.lokacja = atakowany.getLokacja()
+                self.swiat.setPolePlanszy(self.lokacja, self)
+            return
+
         if atakowany.czyOdbilAtak(self):
             self.swiat.dodajWpis(f"{atakowany} odbił atak od {self}")
         elif atakowany.czyUniknalAtak(self):
@@ -102,7 +111,6 @@ class Organizm(ABC):
         else:
             if atakowany.czyZjadlSpecjalna(self):
                 self.swiat.dodajWpis(f"{self} doznał efektu od {atakowany}")
-            from Rosliny.Roslina import Roslina
             if isinstance(atakowany, Roslina):
                 self.swiat.dodajWpis(f"{self} zjadł {atakowany}")
             else:
