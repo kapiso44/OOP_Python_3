@@ -1,4 +1,10 @@
-from UI.GUI import GUI
+import sys
 
 if __name__ == '__main__':
-    GUI()
+    if len(sys.argv) > 1 and sys.argv[1] == 'console':
+        from interfejs.console import Console
+        Console().run()
+    else:
+        from UI.GUI import GUI
+        GUI()
+
