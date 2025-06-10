@@ -12,3 +12,6 @@ class Guarana(Roslina):
     def czyZjadlSpecjalna(self, jedzacy):
         jedzacy.setSila(jedzacy.getSila() + 3)
         return True
+
+    def kolizja(self, atakujacy):
+        super(Guarana, self).kolizja(atakujacy)

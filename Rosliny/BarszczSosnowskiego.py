@@ -25,7 +25,12 @@ class BarszczSosnowskiego(Roslina):
                     self.swiat.setPolePlanszy(obok.getLokacja(), None)
         super(BarszczSosnowskiego, self).akcja()
 
-    def czyZjadlSpecjalna(self, jedzacy):
-        self.zyje = False
-        self.swiat.setPolePlanszy(self.lokacja, None)
-        return True
+    def kolizja(self, atakujacy):
+        if isinstance(atakujacy, CyberOwca):
+            super(BarszczSosnowskiego, self).kolizja(atakujacy)
+        else:
+            self.swiat.dodajWpis(f"{self} otruł {atakujacy}")
+            atakujacy.setZyje(False)
+            self.swiat.setPolePlanszy(atakujacy.getLokacja(), None)
+            self.zyje = False
+            self.swiat.setPolePlanszy(self.lokacja, None)
