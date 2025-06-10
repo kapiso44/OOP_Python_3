@@ -21,19 +21,20 @@ class Czlowiek(Zwierze):
         mnoznik = 1
 
         if wybrany == Qt.Key_Q and cooldown == 0:
-            cooldown = 11
+            cooldown = 10
             self.kolor = "gold"
             self.znak = "S"
-        if cooldown > 5:
+
+        if cooldown > 7:
             mnoznik = 2
-        if 9 > cooldown > 6:
+        elif cooldown > 5:
             mnoznik = random.randint(1, 2)
-        elif cooldown == 6:
-            self.znak = "C"
-            self.kolor = "red"
-            mnoznik = 1
+
         if cooldown:
             cooldown -= 1
+            if cooldown == 5:
+                self.znak = "C"
+                self.kolor = "red"
 
         self.swiat.setCooldown(cooldown)
         if wybrany == Qt.Key_Up:
