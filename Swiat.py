@@ -82,6 +82,65 @@ class Swiat:
     def dodajWpisAkcja(self, o, p):
         self.dziennik.append(f"{o} chce iść {p}")
 
+    # New helper API used by the console implementation
+    def dodaj_komunikat(self, wiadomosc: str):
+        """Alias for dodajWpis for compatibility with early versions."""
+        self.dodajWpis(wiadomosc)
+
+    def czy_pole_w_granicach(self, x: int, y: int) -> bool:
+        """Sprawdza czy wskazane pole znajduje się na planszy."""
+        return 0 <= x < self.rozmiarX and 0 <= y < self.rozmiarY
+
+    def dodaj_organizm(self, organizm):
+        """Dodaje organizm do świata (skrót kompatybilności)."""
+        self.dodajOrganizm(organizm)
+
+    def usun_organizm(self, organizm):
+        """Usuwa organizm z listy i planszy, jeśli jest obecny."""
+        if organizm in self.organizmy:
+            self.organizmy.remove(organizm)
+        p = organizm.getLokacja()
+        if self.czy_pole_w_granicach(p.getX(), p.getY()):
+            if self.getPolePlanszy(p) is organizm:
+                self.setPolePlanszy(p, None)
+        if isinstance(organizm, Czlowiek):
+            self.czyZyjeCzlowiek = False
+
+    def przesun_organizm(self, organizm, nowy_x: int, nowy_y: int):
+        """Przesuwa organizm na nowe pole z obsługą kolizji."""
+        if not self.czy_pole_w_granicach(nowy_x, nowy_y):
+            return False
+
+        stary_x, stary_y = organizm.getLokacja().getX(), organizm.getLokacja().getY()
+        cel = self.plansza[nowy_y][nowy_x]
+
+        if cel is not None and cel is not organizm:
+            # Kolizja - logikę obsługuje metoda kolizja organizmu
+            organizm.kolizja(Punkt(nowy_x, nowy_y))
+        else:
+            # Wolne pole - zwykłe przesunięcie
+            self.plansza[stary_y][stary_x] = None
+            self.plansza[nowy_y][nowy_x] = organizm
+            organizm.lokacja = Punkt(nowy_x, nowy_y)
+
+        return True
+
+    def rysuj_plansze(self) -> str:
+        """Zwraca tekstową reprezentację planszy wraz z dziennikiem."""
+        linie = ["+" + "-" * self.rozmiarX + "+"]
+        for y in range(self.rozmiarY):
+            wiersz = "|"
+            for x in range(self.rozmiarX):
+                org = self.plansza[y][x]
+                wiersz += org.getZnak() if org else " "
+            linie.append(wiersz + "|")
+        linie.append("+" + "-" * self.rozmiarX + "+")
+        if self.dziennik:
+            linie.append("\nZdarzenia:")
+            for msg in self.dziennik:
+                linie.append(f"- {msg}")
+        return "\n".join(linie)
+
     def sprawdzGranice(self, p):
         return self.rozmiarX > p.getX() >= 0 and self.rozmiarY > p.getY() >= 0
 
