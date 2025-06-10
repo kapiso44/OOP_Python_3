@@ -30,6 +30,8 @@ class GUI(QMainWindow):
     zapisz = None
     zapiszAkcja = None
     zapiszPopUp = None
+    tura = None
+    turaAkcja = None
 
     wyjdz = None
     wyjdzAkcja = None
@@ -79,6 +81,8 @@ class GUI(QMainWindow):
         self.nowaAkcja = QAction("Nowa gra")
         self.dodajPrzyciskMenu(self.nowaAkcja, self.nowaGraPopUp)
         if flag:
+            self.turaAkcja = QAction("Następna tura")
+            self.dodajPrzyciskMenu(self.turaAkcja, self.nastepnaTura)
             self.zapiszAkcja = QAction("Zapisz grę")
             self.dodajPrzyciskMenu(self.zapiszAkcja, self.zapiszGre)
         self.wczytajAkcja = QAction("Wczytaj grę")
@@ -111,6 +115,12 @@ class GUI(QMainWindow):
                 self.swiat.setWybrany(e.key())
             self.swiat.wykonajTure()
             self.odswiezEkran()
+    def nastepnaTura(self):
+        if self.swiat is not None:
+            self.swiat.setWybrany(0)
+            self.swiat.wykonajTure()
+            self.odswiezEkran()
+
 
     def nowaGraPopUp(self):
         dialog = NowaGraDialog()
