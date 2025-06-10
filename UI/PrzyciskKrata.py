@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QPushButton
+from PySide6.QtWidgets import QPushButton
 
 from Punkt import Punkt
 

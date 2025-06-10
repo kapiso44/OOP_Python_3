@@ -1,6 +1,6 @@
 import random
 
-from PyQt5.QtCore import Qt
+from PySide6.QtCore import Qt
 
 from Punkt import Punkt
 from Zwierzeta.Zwierze import Zwierze
