@@ -1,9 +1,20 @@
 import sys
 
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGridLayout, QApplication, QLabel, \
-    QMainWindow, QWidget, QDesktopWidget, QAction, QMenuBar, QScrollArea, QInputDialog, QFileDialog
+from PySide6 import QtWidgets
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (
+    QGridLayout,
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QWidget,
+    QDesktopWidget,
+    QAction,
+    QMenuBar,
+    QScrollArea,
+    QInputDialog,
+    QFileDialog,
+)
 
 from MenedzerSave import MenedzerSave
 from Punkt import Punkt
@@ -68,7 +79,7 @@ class GUI(QMainWindow):
 
         self.genMenuBar(False)
         self.show()
-        sys.exit(app.exec_())
+        sys.exit(app.exec())
 
     def center(self):
         qr = self.frameGeometry()

@@ -1,6 +1,15 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QWidget, QFormLayout, QVBoxLayout, \
-    QHBoxLayout, QGroupBox, QDialogButtonBox, QLabel, QSlider
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (
+    QDialog,
+    QWidget,
+    QFormLayout,
+    QVBoxLayout,
+    QHBoxLayout,
+    QGroupBox,
+    QDialogButtonBox,
+    QLabel,
+    QSlider,
+)
 
 
 class Suwak:
